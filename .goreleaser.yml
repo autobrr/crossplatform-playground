@@ -1,5 +1,7 @@
 version: 2
 
+project_name: app
+
 before:
   hooks:
     - go mod tidy
@@ -137,7 +139,7 @@ msi:
     #
     # Default: '{{.ProjectName}}_{{.MsiArch}}'.
     # Templates: allowed.
-#    name: "myproject-{{.MsiArch}}"
+    name: "app-{{.MsiArch}}"
 
     # The WXS file used to create the installers.
     # The file contents go through the templating engine, so you can do things
