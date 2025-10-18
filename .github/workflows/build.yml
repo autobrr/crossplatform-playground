@@ -35,9 +35,9 @@ jobs:
           - runner: ubuntu-latest
             goos: linux
             cgo: 0
-          - runner: ubuntu-latest
-            goos: freebsd
-            cgo: 0
+#          - runner: ubuntu-latest
+#            goos: freebsd
+#            cgo: 0
           - runner: macos-latest
             goos: darwin
             cgo: 1
@@ -147,11 +147,11 @@ jobs:
           path: dist/linux
           key: linux-${{ env.sha_short }}${{ env.flags }}
 
-      - name: Get FreeBSD cache
-        uses: actions/cache@v4
-        with:
-          path: dist/freebsd
-          key: freebsd-${{ env.sha_short }}${{ env.flags }}
+#      - name: Get FreeBSD cache
+#        uses: actions/cache@v4
+#        with:
+#          path: dist/freebsd
+#          key: freebsd-${{ env.sha_short }}${{ env.flags }}
 
       - name: Get Darwin cache
         uses: actions/cache@v4
