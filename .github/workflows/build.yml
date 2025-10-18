@@ -130,6 +130,18 @@ jobs:
           go-version-file: go.mod
           cache: true
 
+      - name: Add msbuild to PATH
+        if : ${{ matrix.os == 'windows-latest' }}
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Install WiX
+        if : ${{ matrix.os == 'windows-latest' }}
+        run: dotnet tool install --global wix
+
+#      - name: Build WiX on Windows
+#        if : ${{ matrix.os == 'windows-latest' }}
+#        run: wix build .\nexus.wxs
+
       # copy the caches from prepare
       - if: ${{ github.event_name == 'workflow_dispatch' }}
         shell: bash
