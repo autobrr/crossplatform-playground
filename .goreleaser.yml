@@ -168,9 +168,9 @@ msi:
     #
     # Templates: allowed.
     # Since: v2.6.
-    extensions:
-      - '{{ if eq .Runtime.Goos "windows" }}WixUIExtension{{ end }}'
-      - "WixUtilExtension"
+#    extensions:
+#      - '{{ if eq .Runtime.Goos "windows" }}WixUIExtension{{ end }}'
+#      - "WixUtilExtension"
 
     # Whether to disable this particular MSI configuration.
     #
