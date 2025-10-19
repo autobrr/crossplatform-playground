@@ -1,0 +1,59 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="autobrr {{.Version}}"
+    UpgradeCode="7EE000B5-522A-4A47-B2BE-84E05734CFA8"
+    Language="1033"
+    Codepage="1252"
+    Version="{{.Version}}"
+    Manufacturer="autobrr"
+    InstallerVersion="200"
+    ProductCode="*">
+    <Icon Id="autobrrIcon" SourceFile=".\distrib\windows\autobrr.ico" />
+    <SummaryInformation
+      Keywords="Installer"
+      Description="autobrr installer"
+      Manufacturer="autobrr" />
+    <Media
+      Id="1"
+      Cabinet="autobrr.cab"
+      EmbedCab="yes"
+    />
+    <StandardDirectory Id='ProgramFiles{{ if eq .Arch "amd64" }}64{{ end }}Folder'>
+      <Directory
+        Id="autobrr"
+        Name="autobrr">
+        <Component
+          Id="MainExecutable"
+          Guid="F79D73A8-A984-4CDE-87C7-7AB5A35F695D">
+          <File
+            Id="autobrr.exe"
+            Name="autobrr.exe"
+            DiskId="1"
+            Source="autobrr-windows.exe"
+            KeyPath="yes"
+          />
+<!--             <Shortcut -->
+<!--               Id="autobrr.exe" -->
+<!--               Directory="ProgramMenuFolder" -->
+<!--               Name="autobrr" -->
+<!--               Target="[ProgramFilesFolder]\autobrr\autobrr.exe" -->
+<!--               WorkingDirectory='INSTALLDIR' -->
+<!--             /> -->
+<!--           </File> -->
+          <RegistryValue
+            Root="HKCU"
+            Key="Software\Microsoft\Windows\CurrentVersion\Run"
+            Name="autobrr"
+            Value=""
+            Type="string" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature
+      Id="Complete"
+      Level="1">
+      <ComponentRef Id="MainExecutable" />
+    </Feature>
+  </Package>
+</Wix>
