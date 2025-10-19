@@ -104,11 +104,11 @@ archives:
 #    format_overrides:
 #      - goos: windows
 #        format: zip
-    name_template: "{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch amd64 }}x86_64{{- else }}{{ .Arch }}{{ end }}"
+    name_template: '{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch "amd64" }}x86_64{{- else }}{{ .Arch }}{{ end }}'
   - id: autobrr-windows
     builds:
       - autobrr-windows
-    name_template: "{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch amd64 }}x86_64{{- else }}{{ .Arch }}{{ end }}"
+    name_template: '{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch "amd64" }}x86_64{{- else }}{{ .Arch }}{{ end }}'
     format: zip
 
 #release:
