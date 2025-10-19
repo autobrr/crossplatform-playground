@@ -30,15 +30,15 @@
             DiskId="1"
             Source="autobrr.exe"
             KeyPath="yes"
-          >
-            <Shortcut
-              Id="autobrr.exe"
-              Directory="ProgramMenuFolder"
-              Name="autobrr"
-              Target="[ProgramFilesFolder]\autobrr\autobrr.exe"
-              WorkingDirectory='INSTALLDIR'
-            />
-          </File>
+          />
+<!--             <Shortcut -->
+<!--               Id="autobrr.exe" -->
+<!--               Directory="ProgramMenuFolder" -->
+<!--               Name="autobrr" -->
+<!--               Target="[ProgramFilesFolder]\autobrr\autobrr.exe" -->
+<!--               WorkingDirectory='INSTALLDIR' -->
+<!--             /> -->
+<!--           </File> -->
           <RegistryValue
             Root="HKCU"
             Key="Software\Microsoft\Windows\CurrentVersion\Run"
