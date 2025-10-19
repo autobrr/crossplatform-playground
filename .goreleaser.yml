@@ -48,7 +48,7 @@ builds:
 #        goarch: arm64
     main: ./cmd/app/main.go
     binary: autobrr
-  - id: autobrr-windows
+  - id: autobrr_windows
     env:
       - CGO_ENABLED=1
     #    flags:
@@ -98,18 +98,18 @@ builds:
 
 archives:
   - id: autobrr
-    builds:
+    ids:
       - autobrr
 #      - autobrrctl
 #    format_overrides:
 #      - goos: windows
 #        format: zip
     name_template: '{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch "amd64" }}x86_64{{- else }}{{ .Arch }}{{ end }}'
-  - id: autobrr-windows
-    builds:
-      - autobrr-windows
+  - id: autobrr_windows
+    ids:
+      - autobrr_windows
     name_template: '{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch "amd64" }}x86_64{{- else }}{{ .Arch }}{{ end }}'
-    format: zip
+    formats: zip
 
 #release:
 #  prerelease: auto
@@ -170,7 +170,7 @@ msi:
     # IDs of the archives to use.
     # Empty means all IDs.
     ids:
-      - autobrr-windows
+      - autobrr_windows
 
     # Filename of the installer (without the extension).
     #
