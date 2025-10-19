@@ -28,7 +28,7 @@
             Id="autobrr.exe"
             Name="autobrr.exe"
             DiskId="1"
-            Source="autobrr.exe"
+            Source="autobrr-windows.exe"
             KeyPath="yes"
           />
 <!--             <Shortcut -->
