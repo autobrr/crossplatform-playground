@@ -38,9 +38,9 @@ jobs:
 #          - runner: ubuntu-latest
 #            goos: freebsd
 #            cgo: 0
-          - runner: macos-latest
-            goos: darwin
-            cgo: 1
+#          - runner: macos-latest
+#            goos: darwin
+#            cgo: 1
           - runner: windows-latest
             goos: windows
             cgo: 1

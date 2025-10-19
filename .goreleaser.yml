@@ -31,7 +31,7 @@ builds:
       - -extldflags "-static"
     goos:
       - linux
-      - darwin
+#      - darwin
 #      - freebsd
     goarch:
       - amd64
