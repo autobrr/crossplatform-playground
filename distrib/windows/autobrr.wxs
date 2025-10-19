@@ -11,17 +11,12 @@
     <SummaryInformation
       Keywords="Installer"
       Description="{{.ProjectName}} installer"
-      Manufacturer="My Company" />
+      Manufacturer="autobrr" />
     <Media
       Id="1"
-      Cabinet="Sample.cab"
+      Cabinet="{{.ProjectName}}.cab"
       EmbedCab="yes"
     />
-    <Feature
-      Id="Complete"
-      Level="1">
-      <ComponentRef Id="MainExecutable" />
-    </Feature>
     <StandardDirectory Id='ProgramFiles{{ if eq .Arch "amd64" }}64{{ end }}Folder'>
       <Directory
         Id="{{.ProjectName}}"
@@ -39,10 +34,16 @@
             Root="HKCU"
             Key="Software\Microsoft\Windows\CurrentVersion\Run"
             Name="{{.ProjectName}}"
-            Value="{{.Binary}}.exe"
+            Value="&quot;[#{{.Binary}}exe]&quot;"
             Type="string" />
         </Component>
       </Directory>
     </StandardDirectory>
+
+    <Feature
+      Id="Complete"
+      Level="1">
+      <ComponentRef Id="MainExecutable" />
+    </Feature>
   </Package>
 </Wix>

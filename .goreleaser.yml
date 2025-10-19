@@ -1,20 +1,36 @@
 version: 2
 
-project_name: app
+project_name: autobrr
 
 before:
   hooks:
     - go mod tidy
 
 builds:
-  - id: app
-#    env:
-#      - CGO_ENABLED=0
+  - id: autobrr
+    env:
+      - CGO_ENABLED=0
+#    overrides:
+#      - goos: darwin
+#        goarch: amd64
+#        env:
+#          - CGO_ENABLED=1  # Required for macOS keychain integration
+#      - goos: darwin
+#        goarch: arm64
+#        env:
+#          - CGO_ENABLED=1  # Required for macOS keychain integration
 #    flags:
 #      - -pgo=cpu.pprof
+    ldflags:
+      - -s
+      - -w
+      - -X main.version={{ .Version }}
+      - -X main.commit={{ .Commit }}
+      - -X main.date={{ .Date }}
+      - -X main.builtBy=goreleaser
+      - -extldflags "-static"
     goos:
       - linux
-      - windows
       - darwin
 #      - freebsd
     goarch:
@@ -23,19 +39,35 @@ builds:
 #      - arm64
 #    goarm:
 #      - 6
-    ignore:
-      - goos: windows
-        goarch: arm
-      - goos: windows
-        goarch: arm64
-      - goos: darwin
-        goarch: arm
-      - goos: freebsd
-        goarch: arm
-      - goos: freebsd
-        goarch: arm64
+#    ignore:
+#      - goos: darwin
+#        goarch: arm
+#      - goos: freebsd
+#        goarch: arm
+#      - goos: freebsd
+#        goarch: arm64
     main: ./cmd/app/main.go
-    binary: app
+    binary: autobrr
+  - id: autobrr-windows
+    env:
+      - CGO_ENABLED=1
+    #    flags:
+    #      - -pgo=cpu.pprof
+    ldflags:
+      - -s
+      - -w
+      - -X main.version={{ .Version }}
+      - -X main.commit={{ .Commit }}
+      - -X main.date={{ .Date }}
+      - -X main.builtBy=goreleaser
+      - -extldflags "-static"
+      - -H=windowsgui
+    goos:
+      - windows
+    goarch:
+      - amd64
+    main: ./cmd/app/main.go
+    binary: autobrr-windows
 #  - id: autobrrctl
 #    env:
 #      - CGO_ENABLED=0
@@ -65,19 +97,19 @@ builds:
 #    binary: autobrrctl
 
 archives:
-  - id: app
+  - id: autobrr
     builds:
-      - app
+      - autobrr
 #      - autobrrctl
-    format_overrides:
-      - goos: windows
-        format: zip
-    name_template: >-
-      {{ .ProjectName }}_
-      {{- .Version }}_
-      {{- .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else }}{{ .Arch }}{{ end }}
+#    format_overrides:
+#      - goos: windows
+#        format: zip
+    name_template: "{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch amd64 }}x86_64{{- else }}{{ .Arch }}{{ end }}"
+  - id: autobrr-windows
+    builds:
+      - autobrr-windows
+    name_template: "{{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- if eq .Arch amd64 }}x86_64{{- else }}{{ .Arch }}{{ end }}"
+    format: zip
 
 #release:
 #  prerelease: auto
@@ -115,7 +147,7 @@ changelog:
       order: 999
 
 nfpms:
-  - package_name: app
+  - package_name: autobrr
     homepage: https://autobrr.com
     maintainer: Autobrr <packages@autobrr.com>
     description: |-
@@ -127,19 +159,24 @@ nfpms:
       - apk
       - deb
       - rpm
-      - archlinux
+#      - archlinux
 
 msi:
   - # ID of the resulting installer.
     #
     # Default: the project name.
-    id: app
+    id: autobrr
+
+    # IDs of the archives to use.
+    # Empty means all IDs.
+    ids:
+      - autobrr-windows
 
     # Filename of the installer (without the extension).
     #
     # Default: '{{.ProjectName}}_{{.MsiArch}}'.
     # Templates: allowed.
-    name: "app-{{.MsiArch}}"
+    name: "autobrr-{{.MsiArch}}"
 
     # The WXS file used to create the installers.
     # The file contents go through the templating engine, so you can do things
@@ -147,12 +184,7 @@ msi:
     #
     # Templates: allowed.
     # Required.
-    wxs: ./distrib/windows/app.wsx
-
-    # IDs of the archives to use.
-    # Empty means all IDs.
-    ids:
-      - app
+    wxs: ./distrib/windows/autobrr.wxs
 
     # GOAMD64 to specify which amd64 version to use if there are multiple
     # versions from the build section.
@@ -163,7 +195,8 @@ msi:
     # More files that will be available in the context in which the installer
     # will be built.
     extra_files:
-      - assets/autobrr.ico
+      - ./distrib/windows/autobrr.ico
+#      - assets/autobrr.ico
 
     # Sets extensions to msitools/wix.
     # See: https://wixtoolset.org/docs/v3/howtos/general/extension_usage_introduction/
@@ -178,12 +211,12 @@ msi:
     #
     # Templates: allowed.
     # Since: v2.12.
-    disable: "{{ .IsSnapshot }}"
+#    disable: "{{ .IsSnapshot }}"
 
     # Whether to remove the archives from the artifact list.
     # If left as false, your end release will have both the zip and the msi
     # files.
-    replace: true
+#    replace: true
 
     # Set the modified timestamp on the output installer, typically
     # you would do this to ensure a build was reproducible.
