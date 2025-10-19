@@ -8,6 +8,7 @@
     Manufacturer="autobrr"
     InstallerVersion="200"
     ProductCode="*">
+    <Icon Id="autobrrIcon" SourceFile=".\distrib\windows\autobrr.ico" />
     <SummaryInformation
       Keywords="Installer"
       Description="autobrr installer"

@@ -16,7 +16,7 @@ var menu = make(map[string]*systray.MenuItem)
 func (a *Application) startTray(ctx context.Context) {
 	systray.Run(func() {
 		defer os.Exit(0)
-		b, _ := assets.Assets.Open("autobrr.png")
+		b, _ := assets.Assets.Open(trayIcon)
 		file, _ := io.ReadAll(b)
 		systray.SetIcon(file)
 		systray.SetTemplateIcon(file, file)
