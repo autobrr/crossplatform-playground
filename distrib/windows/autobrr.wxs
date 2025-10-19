@@ -25,11 +25,20 @@
           Id="MainExecutable"
           Guid="F79D73A8-A984-4CDE-87C7-7AB5A35F695D">
           <File
-            Id="{{.Binary}}exe"
+            Id="{{.ProjectName}}.exe"
             Name="{{.Binary}}.exe"
             DiskId="1"
             Source="{{.Binary}}.exe"
-            KeyPath="yes" />
+            KeyPath="yes"
+          >
+            <Shortcut
+              Id="{{.Binary}}.exe"
+              Directory="ProgramMenuFolder"
+              Name="{{.Binary}}"
+              Target="[ProgramFilesFolder]\{{.Binary}}\{{.Binary}}.exe"
+              WorkingDirectory='INSTALLDIR'
+            />
+          </File>
           <RegistryValue
             Root="HKCU"
             Key="Software\Microsoft\Windows\CurrentVersion\Run"
