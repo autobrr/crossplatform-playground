@@ -34,7 +34,7 @@
             Root="HKCU"
             Key="Software\Microsoft\Windows\CurrentVersion\Run"
             Name="{{.ProjectName}}"
-            Value="&quot;[#{{.Binary}}exe]&quot;"
+            Value=""
             Type="string" />
         </Component>
       </Directory>
